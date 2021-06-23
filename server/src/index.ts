@@ -25,6 +25,16 @@ app.get('/todo/all', (req, res) => {
   });
 });
 
+app.get('/todo/:todoid', (req, res) => {
+  connection.query(
+    `SELECT * FROM todo WHERE id = ${req.params.todoid}`,
+    (error, results, fields) => {
+      if (error) throw error;
+      res.send(results);
+    }
+  );
+});
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
