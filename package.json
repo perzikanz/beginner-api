@@ -1,9 +1,0 @@
-{
-  "name": "beginner-api",
-  "version": "1.0.0",
-  "repository": "https://perzikanz@github.com/perzikanz/beginner-api.git",
-  "author": "perzikanz",
-  "devDependencies": {
-    "typescript": "^4.3.4"
-  }
-}
