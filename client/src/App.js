@@ -8,8 +8,8 @@ function App() {
   return (
     <>
       <h1>ToDo list</h1>
-      <PostTodo />
       <GetTodo todos={todos} setTodos={setTodos} />
+      <PostTodo />
       <DeleteTodo />
     </>
   );
