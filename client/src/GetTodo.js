@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const GetTodo = (props) => {
   const { todos, setTodos } = props;
-  const onClick = async () => {
+  const getFetch = async () => {
     try {
       const respose = await fetch('http://localhost:3001/todo/all');
       const json = await respose.json();
@@ -15,26 +15,16 @@ const GetTodo = (props) => {
       console.error(err);
     }
   };
-  // const checkOnChange = () => {};
+  useEffect(() => {
+    getFetch();
+  });
   return (
     <>
-      <button
-        onClick={() => {
-          onClick();
-        }}
-      >
-        show todo all
-      </button>
       <ul>
         {todos.map((todo) => {
           return (
             <li key={todo.id}>
               <p>{`${todo.id}. ${todo.text}`}</p>
-              {/* <input
-                type='checkbox'
-                checked={todo.checked === 1}
-                onChange={checkOnChange}
-              /> */}
             </li>
           );
         })}
