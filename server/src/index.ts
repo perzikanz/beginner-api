@@ -15,7 +15,7 @@ const connection = mysql.createConnection({
 
 app.use((req, res, next) => {
   res.append('Access-Control-Allow-Origin', 'http://localhost:3000');
-  res.append('Access-Control-Allow-Methods', 'GET,POST,DELETE');
+  res.append('Access-Control-Allow-Methods', 'GET,POST,DELETE,PUT');
   res.append('Access-Control-Allow-Headers', 'Content-Type');
   next();
 });
@@ -57,8 +57,23 @@ app.post('/todo', (req, res) => {
   );
 });
 
+app.put('/todo/:todoid', (req, res) => {
+  const id: string = req.params.todoid;
+  const checked: boolean = req.body.checked;
+  connection.query(
+    `UPDATE todo SET checked = ${checked} WHERE id = ${id}`,
+    (error, results, fields) => {
+      if (error) {
+        res.send(error);
+      } else {
+        res.send(results);
+      }
+    }
+  );
+});
+
 app.delete('/todo', (req, res) => {
-  const id: string = req.body.id;
+  const id: number = req.body.id;
   connection.query(
     `DELETE FROM todo WHERE id=${id}`,
     (error, results, fields) => {
