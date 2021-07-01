@@ -7,14 +7,11 @@ const DeleteTodo = () => {
   };
   const requestOptions = {
     method: 'DELETE',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ id: todoId }),
   };
   const handleSubmit = async () => {
-    console.log(todoId);
     try {
       const response = await fetch(
-        'http://localhost:3001/todo',
+        `http://localhost:3001/todo/${todoId}`,
         requestOptions
       );
       console.log(response.status);

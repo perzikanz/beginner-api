@@ -72,10 +72,10 @@ app.put('/todo/:todoid', (req, res) => {
   );
 });
 
-app.delete('/todo', (req, res) => {
-  const id: number = req.body.id;
+app.delete('/todo/:todoid', (req, res) => {
+  const id: string = req.params.todoid;
   connection.query(
-    `DELETE FROM todo WHERE id=${id}`,
+    `DELETE FROM todo WHERE id = ${id}`,
     (error, results, fields) => {
       if (error) {
         res.send(error);
