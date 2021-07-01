@@ -46,7 +46,7 @@ app.post('/todo', (req, res) => {
   const text: string = req.body.text;
   const checked: string = req.body.checkd || 'false';
   connection.query(
-    `INSERT INTO todo VALUES (null, '${text}', '${checked}')`,
+    `INSERT INTO todo VALUES (null, '${text}', ${checked})`,
     (error, results, fields) => {
       if (error) {
         res.send(error);
