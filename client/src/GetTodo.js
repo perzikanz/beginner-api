@@ -17,7 +17,7 @@ const GetTodo = (props) => {
   };
   useEffect(() => {
     getFetch();
-  });
+  }, []);
   return (
     <>
       <ul>
