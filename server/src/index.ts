@@ -15,7 +15,7 @@ const connection = mysql.createConnection({
 });
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, './../img');
+    cb(null, `${__dirname}/../img/`);
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname);
@@ -98,11 +98,9 @@ app.delete('/todo/:todoid', (req, res) => {
 
 app.post('/image', upload.single('image'), (req, res) => {
   if (req.file) {
-    console.log(req.file.filename);
-    res.json({ result: 'success!' });
+    res.send('success!');
   } else {
-    console.error('error: no file');
-    res.send('error');
+    res.send('error: no file');
   }
 });
 

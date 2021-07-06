@@ -14,7 +14,6 @@ function App() {
       <PostTodo />
       <PutTodo />
       <DeleteTodo />
-      <h1>File upload</h1>
       <UploadImage />
     </>
   );
