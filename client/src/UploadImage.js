@@ -13,6 +13,7 @@ const UploadImage = () => {
   const previewCanvasRef = useRef(null);
   const [imageSrc, setImageSrc] = useState(null);
   const [completedCrop, setCompletedCrop] = useState(null);
+  const [imageName, setImageName] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -25,7 +26,7 @@ const UploadImage = () => {
 
     const formData = new FormData();
     const canvasBlob = await getCanvasBlob(canvas);
-    formData.append('image', canvasBlob);
+    formData.append('image', canvasBlob, imageName);
     const requestOptions = {
       method: 'POST',
       body: formData,
@@ -42,6 +43,7 @@ const UploadImage = () => {
       const reader = new FileReader();
       reader.addEventListener('load', () => setImageSrc(reader.result));
       reader.readAsDataURL(event.target.files[0]);
+      setImageName(event.target.files[0].name);
     }
   };
 
