@@ -1,7 +1,8 @@
 import express from 'express';
 import mysql from 'mysql2';
-
 import * as dotenv from 'dotenv';
+import multer from 'multer';
+
 dotenv.config({ path: `${__dirname}/../.env` });
 
 const app = express();
@@ -12,6 +13,15 @@ const connection = mysql.createConnection({
   password: process.env.MYSQL_PASS,
   database: process.env.MYSQL_DATABASE,
 });
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, `${__dirname}/../img/`);
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+const upload = multer({ storage: storage });
 
 app.use((req, res, next) => {
   res.append('Access-Control-Allow-Origin', 'http://localhost:3000');
@@ -84,6 +94,14 @@ app.delete('/todo/:todoid', (req, res) => {
       }
     }
   );
+});
+
+app.post('/image', upload.single('image'), (req, res) => {
+  if (req.file) {
+    res.send('success!');
+  } else {
+    res.send('error: no file');
+  }
 });
 
 app.listen(port, () => {

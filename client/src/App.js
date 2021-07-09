@@ -3,6 +3,7 @@ import PostTodo from './PostTodo';
 import GetTodo from './GetTodo';
 import DeleteTodo from './DeleteTodo';
 import PutTodo from './PutTodo';
+import UploadImage from './UploadImage';
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -13,6 +14,7 @@ function App() {
       <PostTodo />
       <PutTodo />
       <DeleteTodo />
+      <UploadImage />
     </>
   );
 }
