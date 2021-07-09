@@ -1,12 +1,20 @@
 import React, { useRef, useState } from 'react';
 import CropImage from './CropImage';
 
+function getCanvasBlob(canvas) {
+  return new Promise(function (resolve, reject) {
+    canvas.toBlob(function (blob) {
+      resolve(blob);
+    });
+  });
+}
+
 const UploadImage = () => {
   const previewCanvasRef = useRef(null);
   const [imageSrc, setImageSrc] = useState(null);
   const [completedCrop, setCompletedCrop] = useState(null);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const canvas = previewCanvasRef.current;
     const crop = completedCrop;
@@ -16,22 +24,17 @@ const UploadImage = () => {
     }
 
     const formData = new FormData();
-    canvas.toBlob(
-      async (blob) => {
-        formData.append('image', blob, 'image.png');
-        const requestOptions = {
-          method: 'POST',
-          body: formData,
-        };
-        try {
-          await fetch('http://localhost:3001/image', requestOptions);
-        } catch (err) {
-          console.error(err);
-        }
-      },
-      'image/png',
-      1
-    );
+    const canvasBlob = await getCanvasBlob(canvas);
+    formData.append('image', canvasBlob);
+    const requestOptions = {
+      method: 'POST',
+      body: formData,
+    };
+    try {
+      await fetch('http://localhost:3001/image', requestOptions);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const onSelectFile = (event) => {
